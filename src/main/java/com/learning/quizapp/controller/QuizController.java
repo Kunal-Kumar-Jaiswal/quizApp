@@ -2,6 +2,7 @@ package com.learning.quizapp.controller;
 
 import com.learning.quizapp.model.QuestionWrapper;
 import com.learning.quizapp.model.Quiz;
+import com.learning.quizapp.model.SubmitResponse;
 import com.learning.quizapp.service.QuizService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,11 @@ public class QuizController {
         }else {
             return new ResponseEntity<>(questions,HttpStatus.OK);
         }
+    }
+
+    @PostMapping("submit/{id}")
+    public ResponseEntity<?> submitQuiz(@PathVariable int id, @RequestBody List<SubmitResponse> responses) {
+        int correctAns = quizService.submitQuiz(id,responses);
+        return new ResponseEntity<>("Correct ans : "+correctAns,HttpStatus.OK);
     }
 }
